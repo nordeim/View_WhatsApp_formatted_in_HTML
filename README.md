@@ -1,5 +1,5 @@
-# View_WhatsApp_formatted_in_HTML
-view WhatsApp formatted AI output text or json file, convert to HTML
+# view WhatsApp formatted AI output text or json file, convert to HTML
+This app lets you view AI-generated responses formatted in WhatsApp style with emojis. You can also convert the output responses to HTML. 
 
 $ pip install PyQt6
 
