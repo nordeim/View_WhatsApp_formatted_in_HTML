@@ -90,13 +90,25 @@ class WhatsAppFormatter(QMainWindow):
         # 1. Escape HTML entities (including quotes)
         text = html.escape(text)
 
-        # 2. Handle newlines *AFTER* escaping
+        # 2. Replace asterisk wraps for bold formatting.
+        #    For n asterisks, remove one asterisk from each end so that:
+        #       1 -> returns 0 extra asterisks; 2 -> one remains, etc.
+        def bold_replacer(match):
+            n = len(match.group(1))   # number of asterisks used
+            content = match.group(2)
+            # Explanation:
+            # n = 1: returns 0 extra asterisks; n = 2: returns 1 extra; n = 3: returns 2 extra; n = 4: returns 3 extra
+            return f"<b>{'*'*(n-1)}{content}{'*'*(n-1)}</b>"
+
+        text = re.sub(r'(\*{1,4})(.+?)\1', bold_replacer, text)
+        
+        # 3. Handle newlines *AFTER* escaping
         text = text.replace("\n", "<br>")
 
-        # 3. Handle emojis (encode/decode for surrogate pairs)
+        # 4. Handle emojis (encode/decode for surrogate pairs)
         text = text.encode('utf-16', 'surrogatepass').decode('utf-16')
 
-        # 4. Apply WhatsApp-style formatting tags
+        # 5. Apply WhatsApp-style formatting tags
         text = self.apply_whatsapp_tags(text)
         return text
 
