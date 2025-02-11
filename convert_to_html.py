@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QTextEdit, QVBoxLayout, Q
 from PyQt6.QtGui import QTextCursor
 from PyQt6.QtCore import Qt
 import html
+import re  # Added for regex transformation
 
 class WhatsAppFormatter(QMainWindow):
     def __init__(self):
